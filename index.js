@@ -87,11 +87,11 @@ inquirer.prompt([
         answers.shapeColor
     );
 
-    fs.writeFile("./examples/logo_exp.svg", shape.createShape(answers), (err) => {
+    fs.writeFile("./examples/logo.svg", shape.createShape(answers), (err) => {
         if (err) {
             return console.error(err);
         }
-        console.log("SVG created!");
+        console.log("Generated logo.svg");
     });
 
 })
