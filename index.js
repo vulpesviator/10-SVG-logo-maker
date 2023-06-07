@@ -2,6 +2,10 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const shapeSelection = require("./lib/shapes.js");
 
+const colorNames = [
+    "black", "silver", "gray", "white", "maroon", "red", "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aquamarine", "azure", "beige", "bisque", "blanchedalmond", "blueviolet", "brown", "burlywood", "cadetblue", "chartreuse", "chocolate", "coral", "cornflowerblue", "cornsilk", "crimson", "cyan", "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgreen", "darkgrey", "darkkhaki", "darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred", "darksalmon", "darkseagreen", "darkslateblue", "darkslategray", "darkslategrey", "darkturquoise", "darkviolet", "deeppink", "deepskyblue", "dimgray", "dodgerblue", "firebrick", "floralwhite", "forestgreen", "gainsboro", "ghostwhite", "gold", "goldenrod", "greenyellow", "honeydew", "hotpink", "indianared", "indigo", "ivory", "khaki", "lavender", "lavenderblush", "lawngreen", "lemonchiffon", "lightblue", "lightcoral", "lightcyan", "lightgoldenrodyellow", "lightgray", "lightgreen", "lightgrey", "lightpink", "lightsalmon", "lightseagreen", "lightskyblue", "lightslategray", "lightslategrey", "lightsteelblue", "lightyellow", "limegreen", "linen", "magenta", "marron", "midnightblue", "mintcream", "mistyrose", "moccasin", "navajowhite", "oldlace", "olive", "olivedrab", "orange", "orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise", "palevioletred", "papayawhip", "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "rosybrown", "saddlebrown", "salmon", "sandybrown", "seagreen", "seashell", "sienna", "skyblue", "slateblue", "slategray", "slategrey", "snow", "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "whitesmoke", "yellowgreen"
+]
+
 
 inquirer.prompt([
     {
@@ -20,14 +24,23 @@ inquirer.prompt([
         message: "Please enter a text color by name or if you have the specific hexadecimal number, please enter that started with the '#' sign:",
         name: "textColor",
         validate(answer) {
-            if (answer.includes("#")) {
-                const textcolors = answer.match(/^#(?:([0-9a-fA-F]{3}){1,2})$/);
+            const setColor = answer.trim().toLowerCase().replace(/\s+/g, "");
 
-                if (textcolors === null) {
-                    return "Please enter a valid hexadecimal color starting with \"#\" and including three or six alphanumeric characters: "
-                } else {
-                    return true;
+            if (setColor.startsWith("#")) {
+                const hexColor = setColor.substring(1);
+                
+                const validHex = /^([0-9a-fA-F]{3}){1,2}$/.test(hexColor);
+
+                if (!validHex) {
+                    return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
                 }
+
+                return true;
+
+            } else if (colorNames.includes(setColor.toLowerCase())) {
+                return true;
+            } else {
+                return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
             }
         }
     },
@@ -44,24 +57,34 @@ inquirer.prompt([
         message: "Please enter a shape color different from your text color by name or if you have the specific hexadecimal number, please enter that started with the '#' sign:",
         name: "shapeColor",
         validate(answer) {
-            if (answer.includes("#")) {
-                const textcolors = answer.match(/^#(?:([0-9a-fA-F]{3}){1,2})$/);
+            const setColor = answer.trim().toLowerCase().replace(/\s+/g, "");
 
-                if (textcolors === null) {
-                    return "Please enter a valid hexadecimal color starting with \"#\" and including three or six alphanumeric characters: "
-                } else {
-                    return true;
+            if (setColor.startsWith("#")) {
+                const hexColor = setColor.substring(1);
+                const validHex = /^([0-9a-fA-F]{3}){1,2}$/.test(hexColor);
+
+                if (!validHex) {
+                    return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
                 }
+
+                return true;
+
+            } else if (colorNames.includes(setColor.toLowerCase())) {
+                return true;
+            } else {
+                return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
             }
         }
     }
 ])
 .then(answers => {
-    console.log(answers);
+    console.log(answers.textColor, answers.shapeColor);
+    /*
     fs.writeFile("./examples/logo_exp.svg", shapeSelection(answers), (err) => {
         if (err) {
             return console.error(err);
         }
         console.log("SVG created");
     })
+    */
 })
