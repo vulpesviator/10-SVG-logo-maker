@@ -24,10 +24,10 @@ inquirer.prompt([
         message: "Please enter a text color by name or if you have the specific hexadecimal number, please enter that started with the '#' sign:",
         name: "textColor",
         validate(answer) {
-            const colorAnswer = answer.trim().toLowerCase().replace(/\s+/g, "");
+            const setColor = answer.trim().toLowerCase().replace(/\s+/g, "");
 
-            if (colorAnswer.startsWith("#")) {
-                const hexColor = colorAnswer.substring(1);
+            if (setColor.startsWith("#")) {
+                const hexColor = setColor.substring(1);
                 
                 const validHex = /^([0-9a-fA-F]{3}){1,2}$/.test(hexColor);
 
@@ -37,7 +37,7 @@ inquirer.prompt([
 
                 return true;
 
-            } else if (colorNames.includes(colorAnswer.toLowerCase())) {
+            } else if (colorNames.includes(setColor.toLowerCase())) {
                 return true;
             } else {
                 return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
@@ -57,10 +57,10 @@ inquirer.prompt([
         message: "Please enter a shape color different from your text color by name or if you have the specific hexadecimal number, please enter that started with the '#' sign:",
         name: "shapeColor",
         validate(answer) {
-            const colorAnswer = answer.trim().toLowerCase().replace(/\s+/g, "");
+            const setColor = answer.trim().toLowerCase().replace(/\s+/g, "");
 
-            if (colorAnswer.startsWith("#")) {
-                const hexColor = colorAnswer.substring(1);
+            if (setColor.startsWith("#")) {
+                const hexColor = setColor.substring(1);
                 const validHex = /^([0-9a-fA-F]{3}){1,2}$/.test(hexColor);
 
                 if (!validHex) {
@@ -68,8 +68,8 @@ inquirer.prompt([
                 }
 
                 return true;
-                
-            } else if (colorNames.includes(colorAnswer.toLowerCase())) {
+
+            } else if (colorNames.includes(setColor.toLowerCase())) {
                 return true;
             } else {
                 return "Please enter a valid hexadecimal color starting with \'#\' and including three or six alphanumeric characters."
