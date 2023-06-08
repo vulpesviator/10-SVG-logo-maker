@@ -2,11 +2,12 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const { Shapes, Circle, Triangle, InvTriangle, Square, Diamond, Hexagon } = require("./lib/shapes.js");
 
+/* This variable holds the common web safe color names for CSS */
 const colorNames = [
     "black", "silver", "gray", "white", "maroon", "red", "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aquamarine", "azure", "beige", "bisque", "blanchedalmond", "blueviolet", "brown", "burlywood", "cadetblue", "chartreuse", "chocolate", "coral", "cornflowerblue", "cornsilk", "crimson", "cyan", "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgreen", "darkgrey", "darkkhaki", "darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred", "darksalmon", "darkseagreen", "darkslateblue", "darkslategray", "darkslategrey", "darkturquoise", "darkviolet", "deeppink", "deepskyblue", "dimgray", "dodgerblue", "firebrick", "floralwhite", "forestgreen", "gainsboro", "ghostwhite", "gold", "goldenrod", "greenyellow", "honeydew", "hotpink", "indianared", "indigo", "ivory", "khaki", "lavender", "lavenderblush", "lawngreen", "lemonchiffon", "lightblue", "lightcoral", "lightcyan", "lightgoldenrodyellow", "lightgray", "lightgreen", "lightgrey", "lightpink", "lightsalmon", "lightseagreen", "lightskyblue", "lightslategray", "lightslategrey", "lightsteelblue", "lightyellow", "limegreen", "linen", "magenta", "marron", "midnightblue", "mintcream", "mistyrose", "moccasin", "navajowhite", "oldlace", "olive", "olivedrab", "orange", "orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise", "palevioletred", "papayawhip", "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "rosybrown", "saddlebrown", "salmon", "sandybrown", "seagreen", "seashell", "sienna", "skyblue", "slateblue", "slategray", "slategrey", "snow", "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "whitesmoke", "yellowgreen"
 ]
 
-
+/* Prompts for user input in creating the logo.svg */
 inquirer.prompt([
     {
         type: "input",
@@ -85,9 +86,8 @@ inquirer.prompt([
         }
     }
 ])
-.then(answers => {
-    // console.log(answers.textColor, answers.shapeColor);
-    
+/* Ansers from the prompt are used to create a new svg */
+.then(answers => {    
     const shape = new Shapes(
         answers.monogram,
         answers.fontSelection,
@@ -96,6 +96,7 @@ inquirer.prompt([
         answers.shapeColor
     );
 
+    /* The new shape svg is written to file in the /examples folder */
     fs.writeFile("./examples/logo.svg", shape.createShape(answers), (err) => {
         if (err) {
             return console.error(err);
