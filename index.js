@@ -20,6 +20,14 @@ inquirer.prompt([
         }
     },
     {
+        type: "list",
+        message: "Please select a font for your logo:",
+        choices: ["Serif", "Sans-Serif", "Monospace", "Cursive", "Fantasy"],
+        name: "fontSelection",
+        default: "Sans-Serif"
+
+    },
+    {
         type: "input",
         message: "Please enter a text color by name or if you have the specific hexadecimal number, please enter that started with the '#' sign:",
         name: "textColor",
@@ -82,6 +90,7 @@ inquirer.prompt([
     
     const shape = new Shapes(
         answers.monogram,
+        answers.fontSelection,
         answers.textColor,
         answers.shapeSelection,
         answers.shapeColor
